@@ -22,7 +22,7 @@ EXPOSE 80
 ENTRYPOINT ["python","run.py"]
 ```
 
-### Dockerfile-multi
+### Dockerfile-multi- method-1
 ```properties
 # Build Stage
 FROM python:3.7 AS builder
@@ -53,4 +53,32 @@ EXPOSE 80
 # Run the application
 CMD ["run.py"]
 
+```
+
+
+### Dockerfile-multi- method-2
+```properties
+# ------------------- Stage 1: Build Stage ------------------------------
+
+FROM python:3.7 AS builder
+
+WORKDIR /app
+
+COPY requirements.txt .
+
+# Install build dependencies
+RUN pip install -r requirements.txt
+
+# ------------------- Stage 2: Final Stage ------------------------------
+
+FROM python:3.7-slim
+
+WORKDIR /app
+
+# Copy dependencies and application code from the builder stage
+COPY --from=builder /uer/local/lib/python3.7/site-packages/ /usr/local/lib/python3.7/site-packages/
+
+COPY . .
+
+ENTRYPOINT ["python" , "run.py"]
 ```
