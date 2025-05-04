@@ -25,7 +25,7 @@ ENTRYPOINT ["python","run.py"]
 ### Dockerfile-multi
 ```properties
 # Build Stage
-FROM python:3.7-slim AS builder
+FROM python:3.7 AS builder
 WORKDIR /app
 
 # Copy dependency file first for efficient caching
