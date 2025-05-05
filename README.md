@@ -59,7 +59,6 @@ CMD ["run.py"]
 ### Dockerfile-multi- method-2
 ```properties
 # ------------------- Stage 1: Build Stage ------------------------------
-# Build Stage
 FROM python:3.7 AS builder
 
 # Working directory
@@ -72,19 +71,19 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 # ------------------- Stage 2: Final Stage ------------------------------
-# Final Distroless Stage
 FROM python:3.7-slim
 
 # Working directory
 WORKDIR /app
 
 # Copy dependencies from the builder stage
-COPY --from=builder /uer/local/lib/python3.7/site-packages/ /usr/local/lib/python3.7/site-packages/
+COPY --from=builder /usr/local/lib/python3.7/site-packages/ /usr/local/lib/python3.7/site-packages/
 COPY . .
 
 # Expose the application port
 EXPOSE 80
 
 # Run the application
-ENTRYPOINT ["python" , "run.py"]
+ENTRYPOINT ["python", "run.py"]
+
 ```
